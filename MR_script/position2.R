@@ -20,13 +20,13 @@ library(clusterProfiler)
 library(yulab.utils)
 ids <- bitr(annotated_df$geneId,'ENTREZID','SYMBOL','org.Hs.eg.db')
 
-ego_ALL <- enrichGO(gene = annotated_df$geneId,#我们上面定义???
+ego_ALL <- enrichGO(gene = annotated_df$geneId,
                     OrgDb=org.Hs.eg.db,
                     keyType = "ENTREZID",
-                    ont = "ALL",#富集的GO类型
-                    pAdjustMethod = "BH",#这个不用管，???般都用的BH
+                    ont = "ALL",
+                    pAdjustMethod = "BH",
                     minGSSize = 1,
-                    pvalueCutoff = 1,#P值可以取0.05
+                    pvalueCutoff = 1,
                     qvalueCutoff = 1,
                     readable = TRUE) 
 
@@ -36,7 +36,7 @@ annotated_df <- annotated_df %>%
     keys = geneId,
     column = "SYMBOL",
     keytype = "ENTREZID",
-    multiVals = "first"  # 如果一个 geneId 对应多个 GeneSymbol，则取第一个
+    multiVals = "first" 
   ))
 table(annotated_df$GeneSymbol)
 gene <- as.data.frame(table(annotated_df$GeneSymbol))
@@ -82,4 +82,5 @@ ggsave(plot = p5,filename = "go2.svg",width = 7.6,height =3.5 )
 
 print(p5)
 ego_ALL@result[1:10,]$Description
+
        
