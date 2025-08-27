@@ -20,7 +20,7 @@ annotated_df <- annotated_df %>%
     keys = geneId,
     column = "SYMBOL",
     keytype = "ENTREZID",
-    multiVals = "first"  # 如果一个 geneId 对应多个 GeneSymbol，则取第一个
+    multiVals = "first" 
   ))
 a112 <- as.data.frame(table(annotated_df$GeneSymbol))
 
@@ -29,13 +29,13 @@ ids <- bitr(annotated_df$geneId,'ENTREZID','SYMBOL','org.Hs.eg.db')
 
 library(clusterProfiler)
 library(yulab.utils)
-ego_ALL <- enrichGO(gene = annotated_df$geneId,#我们上面定义???
+ego_ALL <- enrichGO(gene = annotated_df$geneId,
                     OrgDb=org.Hs.eg.db,
                     keyType = "ENTREZID",
-                    ont = "ALL",#富集的GO类型
-                    pAdjustMethod = "BH",#这个不用管，???般都用的BH
+                    ont = "ALL",
+                    pAdjustMethod = "BH",
                     minGSSize = 1,
-                    pvalueCutoff = 1,#P值可以取0.05
+                    pvalueCutoff = 1,
                     qvalueCutoff = 1,
                     readable = TRUE) 
 
@@ -45,7 +45,7 @@ annotated_df <- annotated_df %>%
     keys = geneId,
     column = "SYMBOL",
     keytype = "ENTREZID",
-    multiVals = "first"  # 如果一个 geneId 对应多个 GeneSymbol，则取第一个
+    multiVals = "first" 
   ))
 gene <- as.data.frame(table(annotated_df$GeneSymbol))
 write.csv(ego_ALL,"go1.csv")
@@ -74,5 +74,6 @@ p5 <- ggplot(ego_ALL@result[ego_ALL@result$Description %in% target,],
     panel.grid.major = element_blank(),  # 去除主要网格线
     panel.grid.minor = element_blank()  # 去除次要网格线
   )
+
 
 print(p5)
